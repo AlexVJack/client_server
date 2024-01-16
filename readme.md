@@ -46,41 +46,24 @@ Docker-compose is also required. You can install it from [here](https://docs.doc
    ```bash
     make bash_client
     ```
+2. Use one of the available commands to interact with the application:
+   ```bash
+    php bin/console GetUsers
+    ```
 
-### Building the Project
+### List of the available commands
 
-The `make build` command is used to build the Docker images for the project. This command needs to be run initially and whenever you make changes to the Docker configuration.
+GetUsers - returns a list of all users
+GetUserById - returns a user by id
+CreateUser - creates a new user
+UpdateUser - updates a user
+DeleteUser - deletes a user
 
-```bash
-make build
-```
+GetGroups - returns a list of all groups
+GetGroupById - returns a group by id
+CreateGroup - creates a new group
+UpdateGroup - updates a group
+DeleteGroup - deletes a group
 
-#### Description
-
-This command will build Docker images based on the Dockerfiles for the client and server applications. It ensures that all the necessary dependencies and configurations are set up correctly in the Docker environment.
-
-### Starting the Project
-
-The `make up` command is used to start the Docker containers for the project.
-
-```bash
-make up
-```
-
-#### Description
-
-This command starts the Docker containers defined in your `docker-compose.yml` file. It includes the containers for the client and server applications and any other services such as databases or reverse proxies. Once the containers are up and running, your applications will be accessible as per the configuration.
-
-## Additional Commands
-
-You can add descriptions for other `make` commands or any other commands relevant to your project here.
-
----
-
-### Notes for Customization:
-
-- Replace `[repository_url]` and `[project_directory]` with the actual URL of your Git repository and the name of the project directory.
-- Add any additional instructions specific to your project, such as how to access the applications, any default login credentials, etc.
-- You might want to include information on how to run tests, how to contribute to the project, and any coding standards or guidelines you follow.
-
-This template provides a basic structure for your README. Feel free to expand it to include more specific details about your project.
+AddUserToGroup - adds a user to a group
+GetUserGroupReport - returns a report of all users in a groups

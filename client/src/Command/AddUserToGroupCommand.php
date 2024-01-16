@@ -6,53 +6,49 @@ use App\Service\GuzzleHttpClient;
 use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
-    name: 'CreateUser',
-    description: 'Create a new user on the server',
+    name: 'AddUserToGroup',
+    description: 'Add a user to a group on the server',
 )]
-class CreateUserCommand extends Command
+class AddUserToGroupCommand extends Command
 {
     private GuzzleHttpClient $guzzleHttpClient;
 
     public function __construct(GuzzleHttpClient $guzzleHttpClient)
     {
         parent::__construct();
-
         $this->guzzleHttpClient = $guzzleHttpClient;
     }
 
     protected function configure(): void
     {
         $this
-            ->addArgument('name', InputArgument::REQUIRED, 'The name of the user')
-            ->addArgument('email', InputArgument::REQUIRED, 'The email of the user');
+            ->addArgument('groupId', InputArgument::REQUIRED, 'The ID of the group')
+            ->addArgument('userId', InputArgument::REQUIRED, 'The ID of the user');
     }
 
+    /**
+     * @throws GuzzleException
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $name = $input->getArgument('name');
-        $email = $input->getArgument('email');
-
+        $groupId = $input->getArgument('groupId');
+        $userId = $input->getArgument('userId');
         $client = $this->guzzleHttpClient->getClient();
 
         try {
-            $response = $client->request('POST', 'api/users/new', [
-                'json' => [
-                    'name' => $name,
-                    'email' => $email,
-                ],
-            ]);
+            $response = $client->request('POST', "api/groups/{$groupId}/users/{$userId}");
 
-            if ($response->getStatusCode() !== 201) {
-                $output->writeln("Error creating user: " . $response->getBody());
+            if ($response->getStatusCode() !== 200) {
+                $output->writeln("Error adding user to group: " . $response->getBody());
                 return Command::FAILURE;
             }
 
-            $output->writeln("User created: " . $response->getBody());
+            $output->writeln("User added to group successfully.");
 
             return Command::SUCCESS;
 

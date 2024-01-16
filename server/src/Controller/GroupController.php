@@ -48,6 +48,27 @@ class GroupController extends AbstractController
         return new Response($jsonContent, Response::HTTP_CREATED, ['content-type' => 'application/json']);
     }
 
+    #[Route('/report', name: 'groups_user_report', methods: ['GET'])]
+    public function groupUserReport(): Response
+    {
+        $groups = $this->groupRepository->findAllWithUsers();
+
+        $groupedUsers = [];
+        foreach ($groups as $group) {
+            $groupedUsers[$group->getName()] = array_map(function ($user) {
+                return [
+                    'id' => $user->getId(),
+                    'name' => $user->getName(),
+                    'email' => $user->getEmail(),
+                ];
+            }, $group->getUsers()->toArray());
+        }
+
+        $jsonContent = $this->serializer->serialize($groupedUsers, 'json');
+
+        return new Response($jsonContent, Response::HTTP_OK, ['content-type' => 'application/json']);
+    }
+
     #[Route('/{id}', name: 'group_show', methods: ['GET'])]
     public function show(Group $group): Response
     {
@@ -77,7 +98,9 @@ class GroupController extends AbstractController
         $this->entityManager->persist($group);
         $this->entityManager->flush();
 
-        return new Response(json_encode($group), Response::HTTP_OK, ['content-type' => 'application/json']);
+        $jsonContent = $this->serializer->serialize($group, 'json');
+
+        return new Response($jsonContent, Response::HTTP_OK, ['content-type' => 'application/json']);
     }
 
     #[Route('/{id}', name: 'group_delete', methods: ['DELETE'])]

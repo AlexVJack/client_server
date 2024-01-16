@@ -1,19 +1,19 @@
 <?php
 
+
 namespace App\Command;
 
 use App\Service\GuzzleHttpClient;
-use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
-    name: 'GetUsers',
-    description: 'Get the list of users from the server',
+    name: 'GetUserGroupReport',
+    description: 'Get a report of users grouped by their groups',
 )]
-class GetUsersCommand extends Command
+class GetUserGroupReportCommand extends Command
 {
     private GuzzleHttpClient $guzzleHttpClient;
 
@@ -26,16 +26,15 @@ class GetUsersCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $client = $this->guzzleHttpClient->getClient();
-        $response = $client->request('GET', 'api/users');
+        $response = $client->request('GET', 'api/groups/report');
 
-        $data = json_decode($response->getBody(), true);
+        $report = json_decode($response->getBody(), true);
 
-        foreach ($data as $user) {
-            $output->writeln(
-                "User ID: " . $user['id'] .
-                ", Name: " . $user['name'] .
-                ", Email: " . $user['email']
-            );
+        foreach ($report as $groupName => $users) {
+            $output->writeln("Group: $groupName");
+            foreach ($users as $user) {
+                $output->writeln(" - User ID: " . $user['id'] . ", Name: " . $user['name']);
+            }
         }
 
         return Command::SUCCESS;

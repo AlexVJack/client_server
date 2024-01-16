@@ -32,9 +32,6 @@ class EditUserCommand extends Command
             ->addArgument('email', InputArgument::REQUIRED, 'The new email of the user');
     }
 
-    /**
-     * @throws GuzzleException
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $id = $input->getArgument('id');

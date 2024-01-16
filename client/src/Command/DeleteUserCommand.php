@@ -30,9 +30,6 @@ class DeleteUserCommand extends Command
             ->addArgument('id', InputArgument::REQUIRED, 'The ID of the user to delete');
     }
 
-    /**
-     * @throws GuzzleException
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $id = $input->getArgument('id');

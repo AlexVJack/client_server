@@ -7,52 +7,38 @@ use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
-    name: 'CreateUser',
-    description: 'Create a new user on the server',
+    name: 'GetGroups',
+    description: 'List all groups from the server',
 )]
-class CreateUserCommand extends Command
+class GetGroupsCommand extends Command
 {
     private GuzzleHttpClient $guzzleHttpClient;
 
     public function __construct(GuzzleHttpClient $guzzleHttpClient)
     {
         parent::__construct();
-
         $this->guzzleHttpClient = $guzzleHttpClient;
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->addArgument('name', InputArgument::REQUIRED, 'The name of the user')
-            ->addArgument('email', InputArgument::REQUIRED, 'The email of the user');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $name = $input->getArgument('name');
-        $email = $input->getArgument('email');
-
         $client = $this->guzzleHttpClient->getClient();
 
         try {
-            $response = $client->request('POST', 'api/users/new', [
-                'json' => [
-                    'name' => $name,
-                    'email' => $email,
-                ],
-            ]);
+            $response = $client->request('GET', 'api/groups/');
 
-            if ($response->getStatusCode() !== 201) {
-                $output->writeln("Error creating user: " . $response->getBody());
+            if ($response->getStatusCode() !== 200) {
+                $output->writeln("Error fetching groups: " . $response->getBody());
                 return Command::FAILURE;
             }
 
-            $output->writeln("User created: " . $response->getBody());
+            $groups = json_decode($response->getBody(), true);
+            foreach ($groups as $group) {
+                $output->writeln("Group ID: " . $group['id'] . ", Name: " . $group['name']);
+            }
 
             return Command::SUCCESS;
 
