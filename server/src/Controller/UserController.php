@@ -72,6 +72,7 @@ class UserController extends AbstractController
 
         $data = json_decode($request->getContent(), true);
         $user->setName($data['name'] ?? '');
+        $user->setEmail($data['email'] ?? '');
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();

@@ -20,13 +20,14 @@ services:
         depends_on:
             - db
 
-     # let's decide if we will use the same Dockerfile for both client and server
-#    php-fpm-client:
-#        build:
-#            context: ./client
-#            dockerfile: ../docker/php-fpm/Dockerfile
-#        volumes:
-#            - ./client:/var/www/client:cached
+    php-fpm-client:
+        build:
+            context: ./client
+            dockerfile: ../docker/php-fpm-client/Dockerfile
+        volumes:
+            - ./client:/var/www/client:cached
+        depends_on:
+            - php-fpm-server
 
     db:
         image: mysql:8.0
