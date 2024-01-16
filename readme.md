@@ -35,9 +35,20 @@ Docker-compose is also required. You can install it from [here](https://docs.doc
    ```bash
     make bash_server
     ```
-6. Run the migrations:
+6. Run the composer install and migrations on the server:
    ```bash
+    composer install
     php bin/console doctrine:migrations:migrate
+    exit
+    ```
+7. Use the `make bash_client` command to access the client container:
+   ```bash
+    make bash_client
+    ```
+8. Run the composer install on the client:
+9. ```bash
+    composer install
+    exit
     ```
 
 ## Usage
@@ -49,6 +60,7 @@ Docker-compose is also required. You can install it from [here](https://docs.doc
 2. Use one of the available commands to interact with the application:
    ```bash
     php bin/console GetUsers
+    php bin/console MakeUser 
     ```
 
 ### List of the available commands

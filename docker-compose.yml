@@ -17,7 +17,6 @@ services:
             dockerfile: ../docker/php-fpm-server/Dockerfile
         volumes:
             - ./server:/var/www/html:cached
-        command: bash -c "composer install"
         depends_on:
             - db
 
@@ -27,7 +26,6 @@ services:
             dockerfile: ../docker/php-fpm-client/Dockerfile
         volumes:
             - ./client:/var/www/client:cached
-        command: bash -c "composer install"
         depends_on:
             - php-fpm-server
 
