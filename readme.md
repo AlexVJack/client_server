@@ -17,7 +17,7 @@ Docker-compose is also required. You can install it from [here](https://docs.doc
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/AlexVJack/client_server.git [repository_url]
+   git clone https://github.com/AlexVJack/client_server.git
    ```
 2. Navigate to the project directory:
    ```bash
