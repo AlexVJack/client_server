@@ -10,8 +10,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-The Docker CLI needs to be installed on your machine. You can download the Docker Desktop application for your operating system from the [Docker website](https://www.docker.com/products/docker-desktop).
-Docker-compose is also required. You can install it from [here](https://docs.docker.com/compose/install/).
+The Docker CLI needs to be installed on your machine. 
+Docker Compose version v2.5.1 (available on docker-compose command)
+The project is tested on Ubuntu 22.04
 
 ### Installation
 
