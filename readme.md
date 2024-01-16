@@ -53,17 +53,17 @@ Docker-compose is also required. You can install it from [here](https://docs.doc
 
 ### List of the available commands
 
-GetUsers - returns a list of all users
-GetUserById - returns a user by id
-CreateUser - creates a new user
-UpdateUser - updates a user
-DeleteUser - deletes a user
+- GetUsers - returns a list of all users
+- GetUserById - returns a user by id
+- CreateUser - creates a new user
+- UpdateUser - updates a user
+- DeleteUser - deletes a user
 
-GetGroups - returns a list of all groups
-GetGroupById - returns a group by id
-CreateGroup - creates a new group
-UpdateGroup - updates a group
-DeleteGroup - deletes a group
+- GetGroups - returns a list of all groups
+- GetGroupById - returns a group by id
+- CreateGroup - creates a new group
+- UpdateGroup - updates a group
+- DeleteGroup - deletes a group
 
-AddUserToGroup - adds a user to a group
-GetUserGroupReport - returns a report of all users in a groups
+- AddUserToGroup - adds a user to a group
+- GetUserGroupReport - returns a report of all users in a groups
